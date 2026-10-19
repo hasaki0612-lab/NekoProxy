@@ -1,0 +1,109 @@
+name: Desktop candidate verification
+
+# Deliberately manual until the user approves publishing this local project.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  native:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-2025
+            rid: win-x64
+          - os: ubuntu-24.04
+            rid: linux-x64
+          - os: macos-15
+            rid: osx-arm64
+          - os: macos-15-intel
+            rid: osx-x64
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 35
+    env:
+      AVALONIA_TELEMETRY_OPTOUT: '1'
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install isolated SSH fixture dependencies
+        run: python -m pip install -r tests/fixtures/requirements.txt
+      - name: Install Linux desktop and keyring dependencies
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y libsecret-1-0 gnome-keyring dbus-x11 xvfb libx11-6 libice6 libsm6 libfontconfig1 desktop-file-utils
+      - name: Configure an ephemeral macOS test Keychain
+        if: runner.os == 'macOS'
+        shell: bash
+        run: |
+          keychain_password=$(python3 -c 'import secrets; print(secrets.token_urlsafe(32))')
+          echo "::add-mask::$keychain_password"
+          security create-keychain -p "$keychain_password" "$RUNNER_TEMP/nekoproxy-ci.keychain-db"
+          security set-keychain-settings -lut 21600 "$RUNNER_TEMP/nekoproxy-ci.keychain-db"
+          security unlock-keychain -p "$keychain_password" "$RUNNER_TEMP/nekoproxy-ci.keychain-db"
+          security default-keychain -d user -s "$RUNNER_TEMP/nekoproxy-ci.keychain-db"
+          security list-keychains -d user -s "$RUNNER_TEMP/nekoproxy-ci.keychain-db"
+      - name: Fetch and verify pinned real client cores
+        run: python scripts/ci-fetch-cores.py --output artifacts/core-tools
+      - name: Publish and package the native candidate
+        run: python scripts/package.py --rid ${{ matrix.rid }}
+      - name: Native Windows and macOS automated tests
+        if: runner.os != 'Linux'
+        shell: pwsh
+        run: ./scripts/Test-CI.ps1 -OutputDirectory artifacts/verification -CoreRoot artifacts/core-tools
+      - name: Linux native tests and startup under isolated session bus
+        if: runner.os == 'Linux'
+        run: dbus-run-session -- bash scripts/ci-linux-session.sh
+      - name: Windows and macOS startup smoke
+        if: runner.os != 'Linux'
+        shell: pwsh
+        run: |
+          $exe = if ($IsWindows) { 'artifacts/packages/publish-win-x64/NekoProxy.Desktop.exe' } else { 'artifacts/packages/NekoProxy-0.6.0-${{ matrix.rid }}/NekoProxy.app/Contents/MacOS/NekoProxy.Desktop' }
+          python scripts/gui-smoke.py --exe $exe --output artifacts/gui-startup
+          if ($LASTEXITCODE -ne 0) { throw 'Startup smoke failed' }
+      - name: Compile Windows installer using the hosted image compiler
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $iscc = Join-Path ${env:ProgramFiles(x86)} 'Inno Setup 6/ISCC.exe'
+          if (!(Test-Path -LiteralPath $iscc)) { throw 'Inno Setup compiler missing on hosted image' }
+          & $iscc ("/DPublishDir=" + (Resolve-Path 'artifacts/packages/publish-win-x64')) ("/DInstallerOutput=" + (Join-Path $PWD 'artifacts/packages')) installer/NekoProxy.iss
+          if ($LASTEXITCODE -ne 0) { throw 'Installer compile failed' }
+      - name: Isolated Windows installation and shortcut verification
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: ./scripts/Test-Installer.ps1 -Setup artifacts/packages/NekoProxy-Setup.exe -OutputDirectory artifacts/installer-smoke
+      - name: Linux user install and desktop entry verification
+        if: runner.os == 'Linux'
+        run: |
+          bash artifacts/packages/NekoProxy-0.6.0-linux-x64/install-user.sh
+          desktop-file-validate "$HOME/.local/share/applications/org.nekoproxy.desktop.desktop"
+          test -x "$HOME/.local/opt/NekoProxy/0.6.0/NekoProxy.Desktop"
+      - name: Validate macOS bundle structure
+        if: runner.os == 'macOS'
+        run: |
+          plutil -lint artifacts/packages/NekoProxy-0.6.0-${{ matrix.rid }}/NekoProxy.app/Contents/Info.plist
+          test -x artifacts/packages/NekoProxy-0.6.0-${{ matrix.rid }}/NekoProxy.app/Contents/MacOS/NekoProxy.Desktop
+          file artifacts/packages/NekoProxy-0.6.0-${{ matrix.rid }}/NekoProxy.app/Contents/MacOS/NekoProxy.Desktop
+      - name: Upload candidate artifacts and test evidence (never a Release)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: candidate-${{ matrix.rid }}
+          path: |
+            artifacts/packages/*.zip
+            artifacts/packages/*.tar.gz
+            artifacts/packages/*.exe
+            artifacts/packages/*.sha256
+            artifacts/verification/
+            artifacts/gui-startup/
+            artifacts/installer-smoke/
+            artifacts/core-tools/core-provenance.json
+          if-no-files-found: error

@@ -1,0 +1,35 @@
+# Local candidate only. Prepared with exact local archive SHA-256; no downloads.
+pkgname=nekoproxy
+pkgver=0.6.0
+pkgrel=1
+pkgdesc='Graphical server and network protocol deployment manager'
+arch=('x86_64')
+license=('MIT')
+depends=('glibc' 'gcc-libs' 'zlib' 'icu' 'openssl' 'krb5' 'libsecret' 'dbus'
+         'fontconfig' 'libx11' 'libice' 'libsm' 'libxrandr' 'libxi' 'libxcursor' 'libglvnd' 'xdg-utils')
+optdepends=('gnome-keyring: unlocked Secret Service keyring'
+            'keepassxc: alternative Secret Service provider'
+            'xdg-desktop-portal: desktop file dialogs')
+options=('!strip' '!debug')
+source=('@ARCHIVE@' 'nekoproxy.desktop')
+sha256sums=('@ARCHIVE_SHA256@' '@DESKTOP_SHA256@')
+
+package() {
+  local _root="$srcdir/NekoProxy-${pkgver}-linux-x64"
+  install -d "$pkgdir/opt/nekoproxy" "$pkgdir/usr/bin"
+  local _file
+  for _file in "$_root"/*; do
+    case "${_file##*/}" in
+      install-user.sh|org.nekoproxy.desktop.desktop|NekoProxy.png|package-manifest.json) continue ;;
+    esac
+    cp -a -- "$_file" "$pkgdir/opt/nekoproxy/"
+  done
+  chmod 755 "$pkgdir/opt/nekoproxy/NekoProxy.Desktop"
+  ln -s /opt/nekoproxy/NekoProxy.Desktop "$pkgdir/usr/bin/nekoproxy"
+  install -Dm644 "$srcdir/nekoproxy.desktop" "$pkgdir/usr/share/applications/org.nekoproxy.desktop.desktop"
+  install -Dm644 "$_root/NekoProxy.png" "$pkgdir/usr/share/icons/hicolor/512x512/apps/org.nekoproxy.desktop.png"
+  install -Dm644 "$_root/LICENSE" "$pkgdir/usr/share/licenses/nekoproxy/LICENSE"
+  install -Dm644 "$_root/THIRD_PARTY_NOTICES.md" "$pkgdir/usr/share/licenses/nekoproxy/THIRD_PARTY_NOTICES.md"
+  install -Dm644 "$_root/package-manifest.json" "$pkgdir/usr/share/doc/nekoproxy/upstream-candidate-manifest.json"
+  # No .install hooks: pacman only removes package-owned files, never user data.
+}

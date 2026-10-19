@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=NekoProxy
+Comment=Desktop server and protocol deployment manager
+Exec=/opt/nekoproxy/NekoProxy.Desktop
+TryExec=/opt/nekoproxy/NekoProxy.Desktop
+Icon=org.nekoproxy.desktop
+Terminal=false
+Categories=Network;Utility;
+StartupWMClass=NekoProxy

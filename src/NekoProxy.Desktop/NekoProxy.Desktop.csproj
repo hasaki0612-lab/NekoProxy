@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup><OutputType>WinExe</OutputType><Version>0.6.0</Version><AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault><ApplicationManifest>app.manifest</ApplicationManifest><ApplicationIcon>Assets/NekoProxy.ico</ApplicationIcon></PropertyGroup>
+    <ItemGroup><AvaloniaResource Include="Assets/NekoProxy.ico"/></ItemGroup>
+  <ItemGroup><EmbeddedResource Include="Resources/onboarding.json"/><EmbeddedResource Include="Resources/app.json"/><EmbeddedResource Include="Resources/source-aliases.json"/></ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Avalonia.Desktop" Version="11.3.22"/>
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.3.22"/>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2"/>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.0"/>
+    <PackageReference Include="QRCoder" Version="1.7.0"/>
+    <ProjectReference Include="../NekoProxy.Core/NekoProxy.Core.csproj"/>
+    <ProjectReference Include="../NekoProxy.Infrastructure/NekoProxy.Infrastructure.csproj"/>
+    <ProjectReference Include="../NekoProxy.Deployment/NekoProxy.Deployment.csproj"/>
+    <ProjectReference Include="../NekoProxy.Exporters/NekoProxy.Exporters.csproj"/>
+  </ItemGroup>
+</Project>

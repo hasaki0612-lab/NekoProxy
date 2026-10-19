@@ -1,0 +1,40 @@
+<UserControl xmlns="https://github.com/avaloniaui" xmlns:l="using:NekoProxy.Desktop.Localization" xmlns:controls="using:NekoProxy.Desktop.Controls" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:vm="using:NekoProxy.Desktop.ViewModels" xmlns:core="using:NekoProxy.Core" x:Class="NekoProxy.Desktop.Views.ExportView" x:DataType="vm:ExportViewModel">
+  <StackPanel Spacing="12">
+    <TextBlock Text="{l:Tr a208}" FontSize="22" FontWeight="SemiBold" TextWrapping="Wrap"/><TextBlock Text="{Binding ServerName}" Classes="small" TextWrapping="Wrap"/>
+    <Grid ColumnDefinitions="*,*"><StackPanel Spacing="6" Margin="0,0,12,0"><TextBlock Text="{l:Tr a050}" Classes="small" TextWrapping="Wrap"/><ComboBox ItemsSource="{Binding Nodes}" SelectedItem="{Binding SelectedNode}" HorizontalAlignment="Stretch"><ComboBox.ItemTemplate><DataTemplate x:DataType="core:ProxyNode"><TextBlock Text="{Binding Name}" TextWrapping="Wrap"/></DataTemplate></ComboBox.ItemTemplate></ComboBox></StackPanel><StackPanel Grid.Column="1" Spacing="6"><TextBlock Text="{l:Tr a215}" Classes="small" TextWrapping="Wrap"/><ComboBox ItemsSource="{Binding Clients}" SelectedItem="{Binding SelectedClient}" PlaceholderText="{l:Tr a271}" HorizontalAlignment="Stretch"><ComboBox.ItemTemplate><DataTemplate x:DataType="vm:ClientChoice"><TextBlock Text="{Binding Label}" TextWrapping="Wrap"/></DataTemplate></ComboBox.ItemTemplate></ComboBox></StackPanel></Grid>
+    <Expander Header="{l:Tr v051.023}"><StackPanel Spacing="12">    <TextBlock Text="{l:Local CredentialLabel}" Classes="small" TextWrapping="Wrap"/><controls:SecretTextBox Text="{Binding Credential}" PasswordChar="●" Watermark="{l:Tr a277}"/>
+    <StackPanel IsVisible="{Binding NeedsTls}" Spacing="6"><TextBlock Text="{l:Tr a015}" Classes="small" TextWrapping="Wrap"/><TextBox Text="{Binding Sni}" Watermark="example.com"/></StackPanel><TextBlock Text="{Binding Method}" IsVisible="{Binding IsShadowsocks}" Classes="small"/>
+    <StackPanel IsVisible="{Binding IsReality}" Spacing="10"><TextBlock Text="{l:Tr a012}" Classes="small" TextWrapping="Wrap"/><TextBox Text="{Binding PublicKey}" Watermark="{l:Tr a105}"/><TextBlock Text="Short ID" Classes="small" TextWrapping="Wrap"/><TextBox Text="{Binding ShortId}"/></StackPanel>
+    <WrapPanel><Button Content="{l:Tr a076}" Classes="quiet" Command="{Binding RememberCredentialCommand}"/><Button Content="{l:Tr a272}" Classes="quiet" Command="{Binding LoadCredentialCommand}"/></WrapPanel>
+</StackPanel></Expander>
+    <ComboBox ItemsSource="{Binding ExportScopes}" SelectedIndex="{Binding ExportScope}" HorizontalAlignment="Stretch"><ComboBox.ItemTemplate><DataTemplate><TextBlock Text="{l:Local .}"/></DataTemplate></ComboBox.ItemTemplate></ComboBox>
+    <TextBlock Text="{l:Local PolicySupport}" Classes="small" TextWrapping="Wrap"/>
+    <StackPanel IsVisible="{Binding FullConfiguration}"><StackPanel DataContext="{Binding Policy}" x:DataType="vm:ClientPolicyViewModel"><Expander Header="{l:Local PolicyHeader}"><StackPanel Spacing="12">
+      <ComboBox ItemsSource="{Binding Modes}" SelectedIndex="{Binding ModeIndex}" HorizontalAlignment="Stretch"><ComboBox.ItemTemplate><DataTemplate><TextBlock Text="{l:Local .}"/></DataTemplate></ComboBox.ItemTemplate></ComboBox>
+      <TextBlock Text="{l:Local PathExplanation}" Classes="small" TextWrapping="Wrap" LineHeight="22"/>
+      <Expander Header="{l:Tr v060.advanced}"><StackPanel Spacing="12">
+        <TextBlock Text="{l:Tr v060.proxyDns}" Classes="small"/><AutoCompleteBox ItemsSource="{Binding Upstreams}" Text="{Binding ProxyDns}"/>
+        <TextBlock Text="{l:Tr v060.directDns}" Classes="small"/><AutoCompleteBox ItemsSource="{Binding Upstreams}" Text="{Binding DirectDns}"/>
+        <TextBlock Text="{l:Tr v060.bootstrap}" Classes="small"/><TextBox Text="{Binding BootstrapDns}"/>
+        <StackPanel IsVisible="{Binding Custom}" Spacing="12">
+          <ComboBox ItemsSource="{Binding Ipv6Choices}" SelectedIndex="{Binding Ipv6Index}" HorizontalAlignment="Stretch"><ComboBox.ItemTemplate><DataTemplate><TextBlock Text="{l:Local .}"/></DataTemplate></ComboBox.ItemTemplate></ComboBox>
+          <CheckBox Content="{l:Tr v060.consent}" IsChecked="{Binding Ipv6DirectConsent}"/>
+          <CheckBox Content="{l:Tr v060.lan}" IsChecked="{Binding AllowLan}"/>
+          <CheckBox Content="{l:Tr v060.fake}" IsChecked="{Binding FakeIp}"/>
+          <CheckBox Content="{l:Tr v060.cache}" IsChecked="{Binding DnsCache}"/>
+          <TextBlock Text="{l:Tr v060.rules}" Classes="small" TextWrapping="Wrap"/>
+          <TextBox Text="{Binding DirectDomains}" Watermark="{l:Tr v060.directDomains}" AcceptsReturn="True" MinHeight="64"/>
+          <TextBox Text="{Binding ProxyDomains}" Watermark="{l:Tr v060.proxyDomains}" AcceptsReturn="True" MinHeight="64"/>
+          <TextBox Text="{Binding RejectDomains}" Watermark="{l:Tr v060.rejectDomains}" AcceptsReturn="True" MinHeight="64"/>
+        </StackPanel>
+      </StackPanel></Expander>
+      <WrapPanel><Button Content="{l:Tr v060.save}" Command="{Binding SaveDefaultCommand}" Classes="quiet"/><Button Content="{l:Tr v060.reset}" Command="{Binding ResetCommand}" Classes="quiet"/></WrapPanel>
+      <TextBlock Text="{l:Local Message}" Classes="small" TextWrapping="Wrap"/>
+    </StackPanel></Expander></StackPanel></StackPanel>
+    <TextBlock Text="{l:Tr a031}" Classes="small" TextWrapping="Wrap"/>
+    <WrapPanel Margin="0,6,0,0"><Button Content="{l:Tr a209}" Classes="primary" Command="{Binding GenerateCommand}"/><Button Content="{l:Tr a101}" Command="{Binding CopyLinkCommand}"/><Button Content="{l:Tr a207}" Command="{Binding GenerateQrCommand}"/></WrapPanel>
+    <Border Classes="notice" Padding="16"><TextBlock Text="{l:Local ImportGuide}" TextWrapping="Wrap" LineHeight="24"/></Border>
+    <Image Source="{Binding QrImage}" IsVisible="{Binding HasQr}" Width="180" Height="180" HorizontalAlignment="Left" Stretch="Uniform"/>
+    <TextBlock Text="{l:Local Message}" Classes="muted" TextWrapping="Wrap" LineHeight="22" MaxWidth="530"/>
+  </StackPanel>
+</UserControl>

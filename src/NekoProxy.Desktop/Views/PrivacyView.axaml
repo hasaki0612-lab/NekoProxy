@@ -1,0 +1,79 @@
+<UserControl xmlns="https://github.com/avaloniaui" xmlns:l="using:NekoProxy.Desktop.Localization" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:vm="using:NekoProxy.Desktop.ViewModels" xmlns:controls="using:NekoProxy.Desktop.Controls" xmlns:infra="using:NekoProxy.Infrastructure" x:Class="NekoProxy.Desktop.Views.PrivacyView" x:DataType="vm:PrivacyViewModel">
+  <Grid RowDefinitions="Auto,*,Auto">
+    <StackPanel Margin="32,28,32,0">
+      <TextBlock Text="{l:Tr a152}" FontSize="28" FontWeight="SemiBold" TextWrapping="Wrap"/>
+      <WrapPanel Margin="0,30,0,18">
+        <Button Classes="category" Classes.selected="{Binding Category0}" Content="{l:Tr category.local}" Command="{Binding SelectCategoryCommand}" CommandParameter="0" Margin="0,0,12,10"/>
+        <Button Classes="category" Classes.selected="{Binding Category1}" Content="{l:Tr a151}" Command="{Binding SelectCategoryCommand}" CommandParameter="1" Margin="0,0,12,10"/>
+        <Button Classes="category" Classes.selected="{Binding Category2}" Content="{l:Tr a077}" Command="{Binding SelectCategoryCommand}" CommandParameter="2" Margin="0,0,12,10"/>
+        <Button Classes="category" Classes.selected="{Binding Category3}" Content="{l:Tr category.diagnostics}" Command="{Binding SelectCategoryCommand}" CommandParameter="3" Margin="0,0,12,10"/>
+        <Button Classes="category" Classes.selected="{Binding Category4}" Content="{l:Tr a205}" Command="{Binding SelectCategoryCommand}" CommandParameter="4" Margin="0,0,0,10"/>
+      </WrapPanel>
+      <Border Height="1" Background="{DynamicResource LineBrush}"/>
+    </StackPanel>
+    <controls:PageDeck Grid.Row="1" SelectedIndex="{Binding CategoryIndex}" ReduceMotion="{ReflectionBinding $parent[Window].DataContext.Settings.ReduceMotion}">
+      <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+        <StackPanel Margin="32,32,32,36" MaxWidth="860" HorizontalAlignment="Left">
+          <TextBlock Text="{l:Tr category.local}" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,20" TextWrapping="Wrap"/>
+          <Grid ColumnDefinitions="200,*" Margin="0,16"><TextBlock Text="{l:Tr a181}" FontWeight="Medium" TextWrapping="Wrap" Margin="0,0,24,0"/><TextBlock Grid.Column="1" Text="{Binding DataDirectory}" Classes="muted" TextWrapping="Wrap"/></Grid>
+          <Border Height="1" Background="{DynamicResource LineBrush}"/>
+          <Grid ColumnDefinitions="200,*" Margin="0,16"><TextBlock Text="{l:Tr a080}" FontWeight="Medium" Margin="0,0,24,0" TextWrapping="Wrap"/><TextBlock Grid.Column="1" Text="{Binding Size}"/></Grid>
+          <Border Height="1" Background="{DynamicResource LineBrush}"/>
+          <Grid ColumnDefinitions="200,*" Margin="0,16"><TextBlock Text="{l:Tr a169}" FontWeight="Medium" Margin="0,0,24,0" TextWrapping="Wrap"/><TextBlock Grid.Column="1" Text="{l:Local LastSaved}" TextWrapping="Wrap"/></Grid>
+          <Border Height="1" Background="{DynamicResource LineBrush}"/>
+          <Button Content="{l:Tr a142}" Command="{Binding OpenDataCommand}" HorizontalAlignment="Left" Margin="0,26,0,0"/>
+        </StackPanel>
+      </ScrollViewer>
+      <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+        <StackPanel Margin="32,32,32,36" MaxWidth="760" HorizontalAlignment="Left">
+          <TextBlock Text="{l:Tr a151}" FontSize="18" FontWeight="SemiBold" TextWrapping="Wrap"/>
+          <Border Background="{DynamicResource PrivacyProtectionBrush}" Padding="16,12" CornerRadius="5" Margin="0,22,0,24"><TextBlock Text="{l:Local Protection}" Foreground="{DynamicResource AccentInkBrush}" TextWrapping="Wrap"/></Border>
+          <TextBlock Text="{l:Tr a018}" Classes="muted" TextWrapping="Wrap" LineHeight="28"/>
+          <Border Height="1" Background="{DynamicResource LineBrush}" Margin="0,36,0,30"/><TextBlock Text="{l:Tr remote.hostCache}" FontSize="18" FontWeight="SemiBold"/><TextBlock Text="{l:Tr remote.hostCacheHint}" Classes="muted" LineHeight="26" TextWrapping="Wrap" Margin="0,14,0,24"/><Button Content="{l:Tr remote.resetTrust}" Command="{Binding ResetHostTrustCommand}" HorizontalAlignment="Left"/>
+        </StackPanel>
+      </ScrollViewer>
+      <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+        <StackPanel Margin="32,32,32,36" MaxWidth="760" HorizontalAlignment="Left">
+          <TextBlock Text="{l:Tr a077}" FontSize="18" FontWeight="SemiBold" TextWrapping="Wrap"/>
+          <TextBlock Text="{l:Tr a007}" Classes="muted" TextWrapping="Wrap" LineHeight="26" Margin="0,18,0,30"/>
+          <controls:SecretTextBox Text="{Binding BackupPassword}" PasswordChar="●" Watermark="{l:Tr a096}" MinHeight="42" Width="480" HorizontalAlignment="Left"/>
+          <WrapPanel Margin="0,26,0,0"><Button Content="{l:Tr a108}" Command="{Binding BackupCommand}" Classes="primary" Margin="0,0,14,10"/><Button Content="{l:Tr a136}" Command="{Binding RequestRestoreCommand}" Margin="0,0,0,10"/></WrapPanel>
+          <Border Height="1" Background="{DynamicResource LineBrush}" Margin="0,26,0,26"/>
+          <CheckBox Content="{l:Tr a138}" IsChecked="{Binding ReplaceOnRestore}"/>
+        </StackPanel>
+      </ScrollViewer>
+      <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+        <StackPanel Margin="32,32,32,36" MaxWidth="860" HorizontalAlignment="Stretch">
+          <Grid ColumnDefinitions="*,Auto">
+            <TextBlock Text="{l:Tr a121}" FontSize="18" FontWeight="SemiBold" TextWrapping="Wrap" VerticalAlignment="Center" Margin="0,0,24,0"/>
+            <Button Grid.Column="1" Content="{l:Tr a141}" Command="{Binding OpenExportsCommand}"/>
+          </Grid>
+          <TextBlock Text="{l:Tr a071}" Classes="muted" TextWrapping="Wrap" LineHeight="25" Margin="0,14,0,0"/>
+          <ListBox ItemsSource="{Binding Exports}" SelectedItem="{Binding SelectedExport}" IsVisible="{Binding !NoExports}" MaxHeight="180" Background="{DynamicResource PrivacyExportBrush}" Margin="0,22,0,0" BorderBrush="{DynamicResource LineBrush}" BorderThickness="1" Padding="10">
+            <ListBox.ItemTemplate><DataTemplate x:DataType="infra:LocalExportFile"><TextBlock Text="{Binding Name}" TextWrapping="Wrap" FontSize="13" Margin="0,6"/></DataTemplate></ListBox.ItemTemplate>
+          </ListBox>
+          <Border Background="{DynamicResource PrivacyEmptyBrush}" BorderBrush="{DynamicResource LineBrush}" BorderThickness="1" CornerRadius="5" Padding="18,20" Margin="0,22,0,0" IsVisible="{Binding NoExports}"><TextBlock Text="{l:Tr a112}" Classes="muted" TextWrapping="Wrap"/></Border>
+          <Button Content="{l:Tr a073}" Command="{Binding RequestDeleteCommand}" IsEnabled="{Binding HasSelectedExport}" Classes="danger" HorizontalAlignment="Left" Margin="0,18,0,0"/>
+          <Border Height="1" Background="{DynamicResource LineBrush}" Margin="0,36,0,30"/>
+          <TextBlock Text="{l:Tr a251}" FontSize="18" FontWeight="SemiBold" TextWrapping="Wrap"/>
+          <TextBlock Text="{l:Tr a250}" Classes="muted" TextWrapping="Wrap" LineHeight="26" Margin="0,14,0,22"/>
+          <WrapPanel><Button Content="{l:Tr a143}" Command="{Binding OpenLogsCommand}" Margin="0,0,14,10"/><Button Content="{l:Tr a111}" Command="{Binding DiagnosticsCommand}" Margin="0,0,0,10"/></WrapPanel>
+        </StackPanel>
+      </ScrollViewer>
+      <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+        <StackPanel Margin="32,32,32,36" MaxWidth="860" HorizontalAlignment="Stretch">
+          <TextBlock Text="{l:Tr a205}" FontSize="18" FontWeight="SemiBold" TextWrapping="Wrap"/>
+          <TextBlock Text="{l:Tr a085}" Classes="muted" TextWrapping="Wrap" LineHeight="26" Margin="0,18,0,30"/>
+          <WrapPanel><CheckBox Content="{l:Tr a171}" IsChecked="{Binding ClearServers}" Margin="0,0,24,12"/><CheckBox Content="{l:Tr a110}" IsChecked="{Binding ClearExports}" Margin="0,0,24,12"/><CheckBox Content="{l:Tr a162}" IsChecked="{Binding ClearLogs}" Margin="0,0,24,12"/><CheckBox Content="{l:Tr a233}" IsChecked="{Binding ClearCache}" Margin="0,0,0,12"/></WrapPanel>
+          <Button Content="{l:Tr a204}" Classes="danger" Command="{Binding RequestClearCommand}" HorizontalAlignment="Left" Margin="0,22,0,0"/>
+        </StackPanel>
+      </ScrollViewer>
+    </controls:PageDeck>
+    <controls:ActionSurface Grid.Row="2"><TextBlock Margin="32,16" Text="{l:Local Message}" Classes="small" TextWrapping="Wrap"/></controls:ActionSurface>
+    <controls:RevealBorder Grid.RowSpan="3" Background="{DynamicResource DimBrush}" IsShown="{Binding HasConfirmation}" ReduceMotion="{ReflectionBinding $parent[Window].DataContext.Settings.ReduceMotion}">
+      <Border Margin="24" MaxWidth="460" Background="{DynamicResource DialogGlassBrush}" Padding="28" CornerRadius="8" HorizontalAlignment="Center" VerticalAlignment="Center" BorderBrush="#DEFFFFFF" BorderThickness="1">
+        <StackPanel Spacing="18"><TextBlock Text="{l:Tr a218}" Classes="section" TextWrapping="Wrap"/><TextBlock Text="{l:Local ConfirmationText}" TextWrapping="Wrap" LineHeight="24"/><StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Right"><Button Content="{l:Tr a082}" Command="{Binding CancelConfirmationCommand}"/><Button Content="{l:Tr a217}" Classes="danger" Command="{Binding ConfirmCommand}"/></StackPanel></StackPanel>
+      </Border>
+    </controls:RevealBorder>
+  </Grid>
+</UserControl>

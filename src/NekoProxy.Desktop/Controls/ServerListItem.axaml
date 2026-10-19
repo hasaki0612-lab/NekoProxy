@@ -1,0 +1,11 @@
+<UserControl xmlns="https://github.com/avaloniaui" xmlns:l="using:NekoProxy.Desktop.Localization" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:core="using:NekoProxy.Core" x:Class="NekoProxy.Desktop.Controls.ServerListItem" x:DataType="core:ServerProfile">
+  <Grid ColumnDefinitions="22,*" Margin="14,18">
+    <Path Data="M12 21 C12 21 5 14 5 9 A7 7 0 0 1 19 9 C19 14 12 21 12 21 Z M14.5 9 A2.5 2.5 0 1 1 9.5 9 A2.5 2.5 0 1 1 14.5 9" Stroke="{DynamicResource IconBrush}" StrokeThickness="1.5" Width="17" Height="19" Stretch="Uniform" VerticalAlignment="Top" Margin="0,3,0,0"/>
+    <StackPanel Grid.Column="1" Spacing="6" Margin="9,0,0,0">
+      <Grid ColumnDefinitions="*,Auto"><TextBlock Text="{Binding Name}" FontSize="14" FontWeight="SemiBold" TextTrimming="CharacterEllipsis"/><TextBlock Grid.Column="1" Text="{Binding LatencyDisplay}" ToolTip.Tip="{l:Local ConnectionSummary}" Classes="small" Margin="8,1,0,0" TextWrapping="Wrap"/></Grid>
+      <TextBlock Text="{l:Placeholder LocationAndIp}" FontSize="12" Classes="muted" TextTrimming="CharacterEllipsis"/>
+      <TextBlock Text="{l:Local ProtocolSummary}" FontSize="11.5" Classes="muted" TextTrimming="CharacterEllipsis"/>
+    </StackPanel>
+  </Grid>
+</UserControl>
+

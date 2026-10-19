@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=NekoProxy
+Comment=Manage your Linux VPS services
+Exec=NekoProxy.Desktop
+Icon=org.nekoproxy.desktop
+Terminal=false
+Categories=Network;Utility;
+StartupWMClass=NekoProxy

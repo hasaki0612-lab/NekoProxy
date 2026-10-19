@@ -1,0 +1,129 @@
+<Application xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:controls="using:NekoProxy.Desktop.Controls" x:Class="NekoProxy.Desktop.App" RequestedThemeVariant="Default">
+  <Application.Resources><ResourceDictionary><ResourceDictionary.ThemeDictionaries>
+<ResourceDictionary x:Key="Light">
+<SolidColorBrush x:Key="PageBrush">#78F4F8FF</SolidColorBrush>
+<SolidColorBrush x:Key="SidebarBrush">#46FFFFFF</SolidColorBrush>
+<SolidColorBrush x:Key="SurfaceBrush">#E8FFFFFF</SolidColorBrush>
+<SolidColorBrush x:Key="TextBrush">#1D2938</SolidColorBrush>
+<SolidColorBrush x:Key="MutedBrush">#52657D</SolidColorBrush>
+<SolidColorBrush x:Key="LineBrush">#38A0B6D4</SolidColorBrush>
+<SolidColorBrush x:Key="AccentBrush">#426DB4</SolidColorBrush>
+<SolidColorBrush x:Key="AccentInkBrush">#365F9E</SolidColorBrush>
+<SolidColorBrush x:Key="SelectedBrush">#C9E4EFFF</SolidColorBrush>
+<SolidColorBrush x:Key="ChartSecondaryBrush">#8B7EBA</SolidColorBrush>
+<SolidColorBrush x:Key="ChartGapBrush">#B2EFF3FA</SolidColorBrush>
+<SolidColorBrush x:Key="ContentGlassBrush">#9FFFFFFF</SolidColorBrush>
+<SolidColorBrush x:Key="DialogGlassBrush">#F5F9FCFF</SolidColorBrush>
+<SolidColorBrush x:Key="PanelBrush">#50FFFFFF</SolidColorBrush>
+<SolidColorBrush x:Key="InputBrush">#BCFFFFFF</SolidColorBrush>
+<SolidColorBrush x:Key="HoverBrush">#BBECF3FF</SolidColorBrush>
+<SolidColorBrush x:Key="PressedBrush">#D0DDEAFF</SolidColorBrush>
+<SolidColorBrush x:Key="PrimaryHoverBrush">#365E9F</SolidColorBrush>
+<SolidColorBrush x:Key="NoticeBrush">#8CE7F1FF</SolidColorBrush>
+<SolidColorBrush x:Key="NoticeLineBrush">#72AFC8EE</SolidColorBrush>
+<SolidColorBrush x:Key="SolidBrush">#F4F8FE</SolidColorBrush>
+<SolidColorBrush x:Key="DangerBrush">#A64B58</SolidColorBrush>
+<SolidColorBrush x:Key="IconBrush">#71839A</SolidColorBrush>
+<SolidColorBrush x:Key="DisabledBrush">#98E6EDF6</SolidColorBrush>
+<SolidColorBrush x:Key="TourPrimaryBrush">#222B38</SolidColorBrush>
+<SolidColorBrush x:Key="TourPrimaryTextBrush">#FFFFFF</SolidColorBrush>
+<SolidColorBrush x:Key="TourPrimaryHoverBrush">#384351</SolidColorBrush>
+<SolidColorBrush x:Key="DimBrush">#660F1928</SolidColorBrush>
+<Color x:Key="RimTop">#F2FFFFFF</Color>
+<Color x:Key="RimMid">#308CA6CA</Color>
+<Color x:Key="RimBottom">#92E1EFFF</Color>
+<LinearGradientBrush x:Key="GlassEdgeBrush" StartPoint="0%,0%" EndPoint="100%,100%"><GradientStop Offset="0" Color="{DynamicResource RimTop}"/><GradientStop Offset="0.48" Color="{DynamicResource RimMid}"/><GradientStop Offset="1" Color="{DynamicResource RimBottom}"/></LinearGradientBrush>
+<SolidColorBrush x:Key="ExpanderHeaderBackground">#50FFFFFF</SolidColorBrush><SolidColorBrush x:Key="ExpanderHeaderForeground">#1D2938</SolidColorBrush><SolidColorBrush x:Key="ExpanderHeaderBorderBrush">#38A0B6D4</SolidColorBrush><SolidColorBrush x:Key="ExpanderHeaderBackgroundPointerOver">#BBECF3FF</SolidColorBrush><SolidColorBrush x:Key="ExpanderHeaderForegroundPointerOver">#1D2938</SolidColorBrush><SolidColorBrush x:Key="ExpanderHeaderBorderBrushPointerOver">#38A0B6D4</SolidColorBrush><SolidColorBrush x:Key="ExpanderHeaderBackgroundPressed">#BBECF3FF</SolidColorBrush><SolidColorBrush x:Key="ExpanderHeaderForegroundPressed">#1D2938</SolidColorBrush><SolidColorBrush x:Key="ExpanderHeaderBorderBrushPressed">#38A0B6D4</SolidColorBrush><SolidColorBrush x:Key="ExpanderHeaderBackgroundDisabled">#BBECF3FF</SolidColorBrush><SolidColorBrush x:Key="ExpanderHeaderForegroundDisabled">#1D2938</SolidColorBrush><SolidColorBrush x:Key="ExpanderHeaderBorderBrushDisabled">#38A0B6D4</SolidColorBrush><SolidColorBrush x:Key="ExpanderContentBackground">Transparent</SolidColorBrush><SolidColorBrush x:Key="ExpanderContentBorderBrush">Transparent</SolidColorBrush><Color x:Key="SystemAccentColor">#426DB4</Color><Color x:Key="SystemAccentColorDark1">#426DB4</Color><Color x:Key="SystemAccentColorDark2">#426DB4</Color><Color x:Key="SystemAccentColorDark3">#426DB4</Color><Color x:Key="SystemAccentColorLight1">#426DB4</Color><Color x:Key="SystemAccentColorLight2">#426DB4</Color><Color x:Key="SystemAccentColorLight3">#426DB4</Color>
+<!-- Retained theme interpolation and dark-only density; original visual endpoints. -->
+<Color x:Key="MaterialTintColor">#F1F7FF</Color><Color x:Key="MaterialFallbackColor">#EDF5FF</Color><x:Double x:Key="MaterialTintOpacity">0.16</x:Double><x:Double x:Key="MaterialDensity">0.48</x:Double>
+<SolidColorBrush x:Key="PrivacyProtectionBrush">#EEF5FF</SolidColorBrush>
+<SolidColorBrush x:Key="PrivacyExportBrush">#FAFCFF</SolidColorBrush>
+<SolidColorBrush x:Key="PrivacyEmptyBrush">#F8FBFF</SolidColorBrush>
+</ResourceDictionary>
+<ResourceDictionary x:Key="Dark">
+<SolidColorBrush x:Key="PageBrush">#84151B25</SolidColorBrush>
+<SolidColorBrush x:Key="SidebarBrush">#54212732</SolidColorBrush>
+<SolidColorBrush x:Key="SurfaceBrush">#D52B3442</SolidColorBrush>
+<SolidColorBrush x:Key="TextBrush">#EDF2F8</SolidColorBrush>
+<SolidColorBrush x:Key="MutedBrush">#B4C1D1</SolidColorBrush>
+<SolidColorBrush x:Key="LineBrush">#457F90A6</SolidColorBrush>
+<SolidColorBrush x:Key="AccentBrush">#486BA0</SolidColorBrush>
+<SolidColorBrush x:Key="AccentInkBrush">#B6CCED</SolidColorBrush>
+<SolidColorBrush x:Key="SelectedBrush">#CB37495F</SolidColorBrush>
+<SolidColorBrush x:Key="ChartSecondaryBrush">#C0B9E1</SolidColorBrush>
+<SolidColorBrush x:Key="ChartGapBrush">#C01A2431</SolidColorBrush>
+<SolidColorBrush x:Key="ContentGlassBrush">#AC1C2430</SolidColorBrush>
+<SolidColorBrush x:Key="DialogGlassBrush">#EB26303F</SolidColorBrush>
+<SolidColorBrush x:Key="PanelBrush">#44293341</SolidColorBrush>
+<SolidColorBrush x:Key="InputBrush">#C319222F</SolidColorBrush>
+<SolidColorBrush x:Key="HoverBrush">#C93A475B</SolidColorBrush>
+<SolidColorBrush x:Key="PressedBrush">#E2445268</SolidColorBrush>
+<SolidColorBrush x:Key="PrimaryHoverBrush">#557BB6</SolidColorBrush>
+<SolidColorBrush x:Key="NoticeBrush">#A72B3C51</SolidColorBrush>
+<SolidColorBrush x:Key="NoticeLineBrush">#80627A99</SolidColorBrush>
+<SolidColorBrush x:Key="SolidBrush">#202A38</SolidColorBrush>
+<SolidColorBrush x:Key="DangerBrush">#F0A7AE</SolidColorBrush>
+<SolidColorBrush x:Key="IconBrush">#B1BFCE</SolidColorBrush>
+<SolidColorBrush x:Key="DisabledBrush">#AF263140</SolidColorBrush>
+<SolidColorBrush x:Key="TourPrimaryBrush">#D7E2F0</SolidColorBrush>
+<SolidColorBrush x:Key="TourPrimaryTextBrush">#17212D</SolidColorBrush>
+<SolidColorBrush x:Key="TourPrimaryHoverBrush">#FFFFFF</SolidColorBrush>
+<SolidColorBrush x:Key="DimBrush">#99080D16</SolidColorBrush>
+<Color x:Key="RimTop">#827F94AE</Color>
+<Color x:Key="RimMid">#247E91AB</Color>
+<Color x:Key="RimBottom">#645D728F</Color>
+<LinearGradientBrush x:Key="GlassEdgeBrush" StartPoint="0%,0%" EndPoint="100%,100%"><GradientStop Offset="0" Color="{DynamicResource RimTop}"/><GradientStop Offset="0.48" Color="{DynamicResource RimMid}"/><GradientStop Offset="1" Color="{DynamicResource RimBottom}"/></LinearGradientBrush>
+<SolidColorBrush x:Key="ExpanderHeaderBackground">#7B293341</SolidColorBrush><SolidColorBrush x:Key="ExpanderHeaderForeground">#EDF2F8</SolidColorBrush><SolidColorBrush x:Key="ExpanderHeaderBorderBrush">#457F90A6</SolidColorBrush><SolidColorBrush x:Key="ExpanderHeaderBackgroundPointerOver">#C93A475B</SolidColorBrush><SolidColorBrush x:Key="ExpanderHeaderForegroundPointerOver">#EDF2F8</SolidColorBrush><SolidColorBrush x:Key="ExpanderHeaderBorderBrushPointerOver">#457F90A6</SolidColorBrush><SolidColorBrush x:Key="ExpanderHeaderBackgroundPressed">#C93A475B</SolidColorBrush><SolidColorBrush x:Key="ExpanderHeaderForegroundPressed">#EDF2F8</SolidColorBrush><SolidColorBrush x:Key="ExpanderHeaderBorderBrushPressed">#457F90A6</SolidColorBrush><SolidColorBrush x:Key="ExpanderHeaderBackgroundDisabled">#C93A475B</SolidColorBrush><SolidColorBrush x:Key="ExpanderHeaderForegroundDisabled">#EDF2F8</SolidColorBrush><SolidColorBrush x:Key="ExpanderHeaderBorderBrushDisabled">#457F90A6</SolidColorBrush><SolidColorBrush x:Key="ExpanderContentBackground">Transparent</SolidColorBrush><SolidColorBrush x:Key="ExpanderContentBorderBrush">Transparent</SolidColorBrush><Color x:Key="SystemAccentColor">#486BA0</Color><Color x:Key="SystemAccentColorDark1">#486BA0</Color><Color x:Key="SystemAccentColorDark2">#486BA0</Color><Color x:Key="SystemAccentColorDark3">#486BA0</Color><Color x:Key="SystemAccentColorLight1">#486BA0</Color><Color x:Key="SystemAccentColorLight2">#486BA0</Color><Color x:Key="SystemAccentColorLight3">#486BA0</Color>
+<!-- Retained theme interpolation and dark-only density; original visual endpoints. -->
+<Color x:Key="MaterialTintColor">#111B29</Color><Color x:Key="MaterialFallbackColor">#192332</Color><x:Double x:Key="MaterialTintOpacity">0.72</x:Double><x:Double x:Key="MaterialDensity">0.76</x:Double>
+<SolidColorBrush x:Key="PrivacyProtectionBrush">#A72B3C51</SolidColorBrush>
+<SolidColorBrush x:Key="PrivacyExportBrush">#44293341</SolidColorBrush>
+<SolidColorBrush x:Key="PrivacyEmptyBrush">#44293341</SolidColorBrush>
+</ResourceDictionary>
+</ResourceDictionary.ThemeDictionaries></ResourceDictionary></Application.Resources>
+  <Application.Styles>
+    <FluentTheme />
+    <Style Selector="Window:not(.simpleGlass) Grid.modalBackdrop.blurred"><Setter Property="Effect"><BlurEffect Radius="8"/></Setter></Style>
+    <Style Selector="TextBox:disabled /template/ Border#PART_BorderElement"><Setter Property="Background" Value="{DynamicResource DisabledBrush}"/></Style>
+    <Style Selector="controls|GlassPanel, controls|ActionSurface">
+      <Setter Property="Background" Value="{DynamicResource PanelBrush}"/><Setter Property="CornerRadius" Value="18"/><Setter Property="BorderThickness" Value="1"/>
+      <Setter Property="BorderBrush" Value="{DynamicResource GlassEdgeBrush}"/>
+      <Setter Property="BoxShadow" Value="0 4 14 0 #0B375379"/>
+    </Style>
+    <Style Selector="Window.simpleGlass controls|GlassPanel, Window.simpleGlass controls|ActionSurface"><Setter Property="Background" Value="{DynamicResource SolidBrush}"/><Setter Property="BoxShadow" Value="0 0 0 0 Transparent"/></Style>
+    <Style Selector="Border.notice"><Setter Property="Background" Value="{DynamicResource NoticeBrush}"/><Setter Property="BorderBrush" Value="{DynamicResource NoticeLineBrush}"/><Setter Property="BorderThickness" Value="1"/><Setter Property="CornerRadius" Value="14"/></Style>
+    <Style Selector="TextBox, ComboBox"><Setter Property="Background" Value="{DynamicResource InputBrush}"/></Style>
+    <Style Selector="Button:pressed /template/ ContentPresenter"><Setter Property="Background" Value="{DynamicResource PressedBrush}"/></Style>
+
+    <Style Selector="Window"><Setter Property="FontFamily" Value="Microsoft YaHei UI, Noto Sans CJK SC, PingFang SC, sans-serif"/><Setter Property="FontSize" Value="14"/><Setter Property="Foreground" Value="{DynamicResource TextBrush}"/><Setter Property="Background" Value="{DynamicResource SurfaceBrush}"/></Style>
+    <Style Selector="TextBlock"><Setter Property="Foreground" Value="{DynamicResource TextBrush}"/></Style>
+    <Style Selector="TextBlock.muted"><Setter Property="Foreground" Value="{DynamicResource MutedBrush}"/></Style>
+    <Style Selector="TextBlock.small"><Setter Property="FontSize" Value="12"/><Setter Property="Foreground" Value="{DynamicResource MutedBrush}"/></Style>
+    <Style Selector="TextBlock.section"><Setter Property="FontSize" Value="16"/><Setter Property="FontWeight" Value="SemiBold"/></Style>
+    <Style Selector="TextBlock.step.active"><Setter Property="Foreground" Value="{DynamicResource AccentInkBrush}"/><Setter Property="FontWeight" Value="SemiBold"/></Style>
+    <Style Selector="Button"><Setter Property="CornerRadius" Value="10"/><Setter Property="Padding" Value="14,8"/><Setter Property="MinHeight" Value="36"/><Setter Property="Background" Value="{DynamicResource SurfaceBrush}"/><Setter Property="BorderBrush" Value="{DynamicResource LineBrush}"/><Setter Property="BorderThickness" Value="1"/><Setter Property="Cursor" Value="Hand"/></Style>
+    <Style Selector="Button.primary"><Setter Property="Background" Value="{DynamicResource AccentBrush}"/><Setter Property="Foreground" Value="White"/><Setter Property="BorderThickness" Value="0"/></Style>
+    <Style Selector="Button.quiet"><Setter Property="Background" Value="Transparent"/><Setter Property="BorderThickness" Value="0"/><Setter Property="Foreground" Value="{DynamicResource AccentInkBrush}"/></Style>
+    <Style Selector="Button.danger"><Setter Property="Foreground" Value="{DynamicResource DangerBrush}"/></Style>
+    <Style Selector="Button.nav"><Setter Property="HorizontalAlignment" Value="Stretch"/><Setter Property="HorizontalContentAlignment" Value="Left"/><Setter Property="Background" Value="Transparent"/><Setter Property="BorderThickness" Value="0"/><Setter Property="Padding" Value="14,13"/><Setter Property="MinHeight" Value="48"/><Setter Property="Foreground" Value="{DynamicResource MutedBrush}"/></Style>
+    <Style Selector="Button.nav.selected"><Setter Property="Background" Value="{DynamicResource SelectedBrush}"/><Setter Property="Foreground" Value="{DynamicResource TextBrush}"/><Setter Property="FontWeight" Value="SemiBold"/></Style>
+    <Style Selector="Button.nav.selected /template/ ContentPresenter"><Setter Property="Background" Value="{DynamicResource SelectedBrush}"/></Style>
+    <Style Selector="TextBox"><Setter Property="CornerRadius" Value="10"/><Setter Property="BorderBrush" Value="{DynamicResource LineBrush}"/><Setter Property="MinHeight" Value="38"/><Setter Property="Padding" Value="10,8"/></Style>
+    <Style Selector="ComboBox"><Setter Property="CornerRadius" Value="10"/><Setter Property="BorderBrush" Value="{DynamicResource LineBrush}"/><Setter Property="MinHeight" Value="38"/></Style>
+    <Style Selector="ListBox.serverList"><Setter Property="Background" Value="Transparent"/><Setter Property="BorderThickness" Value="0"/><Setter Property="Padding" Value="0"/></Style>
+    <Style Selector="ListBox.serverList ListBoxItem"><Setter Property="Padding" Value="0"/><Setter Property="Margin" Value="0,0,0,4"/><Setter Property="CornerRadius" Value="10"/><Setter Property="HorizontalContentAlignment" Value="Stretch"/></Style>
+    <Style Selector="ListBox.serverList ListBoxItem:selected /template/ ContentPresenter"><Setter Property="Background" Value="{DynamicResource SelectedBrush}"/><Setter Property="BorderThickness" Value="0"/></Style>
+    <Style Selector="ListBox.serverList ListBoxItem:pointerover /template/ ContentPresenter"><Setter Property="Background" Value="{DynamicResource HoverBrush}"/></Style>
+    <Style Selector="ListBox.serverList ListBoxItem:selected:pointerover /template/ ContentPresenter"><Setter Property="Background" Value="{DynamicResource SelectedBrush}"/></Style>
+  <Style Selector="Button.traffic"><Setter Property="Width" Value="26"/><Setter Property="Height" Value="28"/><Setter Property="MinHeight" Value="0"/><Setter Property="Padding" Value="0"/><Setter Property="Background" Value="Transparent"/><Setter Property="BorderThickness" Value="0"/><Setter Property="CornerRadius" Value="10"/></Style>
+    <Style Selector="Button.traffic:pointerover /template/ ContentPresenter"><Setter Property="Background" Value="#12000000"/></Style>
+      <Style Selector="Button.category"><Setter Property="Background" Value="Transparent"/><Setter Property="BorderThickness" Value="1"/><Setter Property="BorderBrush" Value="Transparent"/><Setter Property="Foreground" Value="{DynamicResource MutedBrush}"/><Setter Property="Padding" Value="14,10"/><Setter Property="CornerRadius" Value="6"/></Style>
+    <Style Selector="Button.category.selected"><Setter Property="Background" Value="{DynamicResource SelectedBrush}"/><Setter Property="BorderBrush" Value="{DynamicResource LineBrush}"/><Setter Property="Foreground" Value="{DynamicResource AccentInkBrush}"/><Setter Property="FontWeight" Value="SemiBold"/></Style>
+    <Style Selector="Button.category.selected /template/ ContentPresenter"><Setter Property="Background" Value="{DynamicResource SelectedBrush}"/></Style>
+    <Style Selector="Window:not(.reduced):not(.systemReduced) Button.nav /template/ ContentPresenter, Window:not(.reduced):not(.systemReduced) Button.category /template/ ContentPresenter"><Setter Property="Transitions"><Transitions><BrushTransition Property="Background" Duration="0:0:0.16"/></Transitions></Setter></Style>
+    <Style Selector="Button.primary:pointerover /template/ ContentPresenter"><Setter Property="Background" Value="{DynamicResource PrimaryHoverBrush}"/><Setter Property="Foreground" Value="White"/></Style>
+    <Style Selector="Button:not(.primary):not(.traffic):pointerover /template/ ContentPresenter"><Setter Property="Background" Value="{DynamicResource HoverBrush}"/></Style>
+    <Style Selector="Button.category.selected:pointerover /template/ ContentPresenter"><Setter Property="Background" Value="{DynamicResource SelectedBrush}"/></Style>
+    <Style Selector="Window:not(.reduced):not(.systemReduced) Button:not(.traffic) /template/ ContentPresenter"><Setter Property="Transitions"><Transitions><BrushTransition Property="Background" Duration="0:0:0.16"/></Transitions></Setter></Style>
+  <Style Selector="Expander"><Setter Property="HorizontalAlignment" Value="Stretch"/><Setter Property="Background" Value="Transparent"/><Setter Property="BorderThickness" Value="0"/><Setter Property="CornerRadius" Value="12"/></Style><Style Selector="TextBox:focus /template/ Border#PART_BorderElement, TextBox:pointerover /template/ Border#PART_BorderElement"><Setter Property="Background" Value="{DynamicResource InputBrush}"/></Style><Style Selector="ComboBox:pointerover /template/ Border#Background"><Setter Property="Background" Value="{DynamicResource HoverBrush}"/><Setter Property="BorderBrush" Value="{DynamicResource LineBrush}"/></Style><Style Selector="ComboBox /template/ Border#PopupBorder"><Setter Property="Background" Value="{DynamicResource DialogGlassBrush}"/><Setter Property="BorderBrush" Value="{DynamicResource GlassEdgeBrush}"/><Setter Property="CornerRadius" Value="12"/><Setter Property="Padding" Value="5"/></Style></Application.Styles>
+</Application>

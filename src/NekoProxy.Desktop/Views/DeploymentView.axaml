@@ -1,0 +1,75 @@
+<UserControl xmlns="https://github.com/avaloniaui" xmlns:l="using:NekoProxy.Desktop.Localization" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:controls="using:NekoProxy.Desktop.Controls" xmlns:vm="using:NekoProxy.Desktop.ViewModels" xmlns:core="using:NekoProxy.Core" x:Class="NekoProxy.Desktop.Views.DeploymentView" x:DataType="vm:DeploymentViewModel">
+  <Grid RowDefinitions="Auto,*,Auto" controls:FormAssist.Message="{Binding Message}" controls:FormAssist.Step="{Binding Step}">
+    <StackPanel Margin="28,22,28,0">    <TextBlock Text="{l:Tr a293}" FontSize="28" FontWeight="SemiBold" TextWrapping="Wrap"/><TextBlock Text="{l:Tr v051.028}" Classes="muted" Margin="0,8,0,18" TextWrapping="Wrap"/>
+    <Grid ColumnDefinitions="*,*,*,*,*" Margin="0,0,0,20"><TextBlock Text="{l:Tr v051.026}" Classes="muted step" Classes.active="{Binding Step2}" TextWrapping="Wrap"/><TextBlock Grid.Column="1" Text="{l:Tr v051.027}" Classes="muted step" Classes.active="{Binding Step1}" TextWrapping="Wrap"/><TextBlock Grid.Column="2" Text="{l:Tr a002}" Classes="muted step" Classes.active="{Binding Step3}" TextWrapping="Wrap"/><TextBlock Grid.Column="3" Text="{l:Tr a003}" Classes="muted step" Classes.active="{Binding Step4}" TextWrapping="Wrap"/><TextBlock Grid.Column="4" Text="{l:Tr a004}" Classes="muted step" Classes.active="{Binding Step5}" TextWrapping="Wrap"/></Grid>
+    <TextBlock Text="{l:Local Message}" Foreground="{DynamicResource AccentInkBrush}" TextWrapping="Wrap" LineHeight="22" Margin="0,0,0,12"/><Border Height="1" Background="{DynamicResource LineBrush}"/>
+</StackPanel>
+    <ScrollViewer x:Name="WizardScroll" Grid.Row="1"><Grid x:Name="BodyGrid" ColumnDefinitions="3*,2*" RowDefinitions="Auto,Auto" Margin="28,22,28,24">
+        <StackPanel x:Name="FormPanel" Spacing="14">
+      <TextBlock Text="{l:Local StepLabel}" FontSize="12" Foreground="{DynamicResource AccentInkBrush}" TextWrapping="Wrap"/><TextBlock Text="{l:Local StepTitle}" FontSize="22" FontWeight="SemiBold" TextWrapping="Wrap"/>
+      <StackPanel IsVisible="{Binding Step1}" IsEnabled="{Binding !IsOperating}" Spacing="18" Margin="0,8,0,8">
+        <TextBlock Text="{l:Tr a079}" Classes="small" TextWrapping="Wrap"/><ComboBox ItemsSource="{Binding Protocols}" SelectedIndex="{Binding ProtocolIndex}" HorizontalAlignment="Stretch"/><TextBlock Text="TCP · REALITY · XTLS Vision (flow: xtls-rprx-vision)" IsVisible="{Binding IsReality}" Classes="small" TextWrapping="Wrap"/>
+        <TextBlock Text="{l:Tr v051.029}" Classes="muted" TextWrapping="Wrap"/>
+
+      </StackPanel>
+      <StackPanel IsVisible="{Binding Step2}" IsEnabled="{Binding !IsOperating}" Spacing="12">
+        <TextBlock Text="{l:Tr a061}" Classes="small" TextWrapping="Wrap"/><TextBox controls:FormAssist.Field="Host" Text="{Binding Host}" Watermark="IPv4 / IPv6"/>
+        <Grid ColumnDefinitions="*,*"><StackPanel Spacing="6" Margin="0,0,12,0"><TextBlock Text="{l:Tr a021}" Classes="small" TextWrapping="Wrap"/><TextBox controls:FormAssist.Field="SshPort" Text="{Binding SshPort}"/></StackPanel><StackPanel Grid.Column="1" Spacing="6"><TextBlock Text="{l:Tr a212}" Classes="small" TextWrapping="Wrap"/><TextBox controls:FormAssist.Field="Username" Text="{Binding Username}"/></StackPanel></Grid>
+        <ComboBox ItemsSource="{Binding AuthenticationChoices}" SelectedIndex="{Binding AuthenticationIndex}" HorizontalAlignment="Stretch"><ComboBox.ItemTemplate><DataTemplate x:DataType="x:String"><TextBlock Text="{l:Local .}"/></DataTemplate></ComboBox.ItemTemplate></ComboBox>
+        <TextBlock IsVisible="{Binding !IsPassword}" Text="{l:Tr a019}" Classes="small" TextWrapping="Wrap"/><Grid IsVisible="{Binding !IsPassword}" ColumnDefinitions="*,Auto"><TextBox controls:FormAssist.Field="PrivateKeyPath" Text="{Binding PrivateKeyPath}" Watermark="{l:Tr a053}"/><Button Grid.Column="1" Content="{l:Tr remote.browse}" Command="{Binding BrowseKeyCommand}" Margin="10,0,0,0"/></Grid>
+        <TextBlock Text="{l:Local LoginSecretLabel}" Classes="small"/><controls:SecretTextBox Text="{Binding KeyPassphrase}" PasswordChar="●" Watermark="{l:Tr v052.secretPlaceholder}"/><TextBlock Text="{l:Tr ssh.sessionOnly}" Classes="small" TextWrapping="Wrap"/>
+        <Button controls:FormAssist.Field="Connect" Content="{l:Tr v051.042}" Command="{Binding ConnectCommand}" IsVisible="{Binding RemoteMode}" Classes="primary" HorizontalAlignment="Left"/><Expander Header="{l:Tr v051.041}"><CheckBox Content="{l:Tr remote.localMode}" IsChecked="{Binding LocalOnly}"/></Expander>
+
+        <TextBlock Text="{l:Local ConnectionStatus}" Foreground="{DynamicResource AccentInkBrush}" TextWrapping="Wrap"/><TextBlock Text="{l:Local EnvironmentSummary}" IsVisible="{Binding HasInspection}" Classes="muted" TextWrapping="Wrap"/>
+        <Expander Header="{l:Tr v051.043}"><TextBox Text="{Binding ConnectionDetail}" IsReadOnly="True" AcceptsReturn="True" TextWrapping="Wrap" MinHeight="120"/></Expander>
+      </StackPanel>
+      <StackPanel IsVisible="{Binding Step3}" IsEnabled="{Binding !IsOperating}" Spacing="12">
+        <Grid ColumnDefinitions="150,*"><StackPanel Spacing="6" Margin="0,0,12,0"><TextBlock Text="{l:Tr a214}" Classes="small" TextWrapping="Wrap"/><TextBox controls:FormAssist.Field="ProxyPort" Text="{Binding ProxyPort}"/></StackPanel><StackPanel Grid.Column="1" IsVisible="{Binding NeedsTls}" Spacing="6"><TextBlock Text="{l:Local TlsTargetLabel}" Classes="small" TextWrapping="Wrap"/><TextBox controls:FormAssist.Field="Sni" Text="{Binding Sni}" IsReadOnly="{Binding !IsSniEditable}" Watermark="example.com"/></StackPanel></Grid>
+        <Border Classes="notice" Padding="16"><TextBlock Text="{l:Local PreparedStatus}" Foreground="{DynamicResource AccentInkBrush}" TextWrapping="Wrap"/></Border>
+        <StackPanel IsVisible="{Binding IsReality}" Spacing="12">
+          <CheckBox Content="{l:Tr v051.034}" IsChecked="{Binding CustomRealityTarget}"/>
+          <Button controls:FormAssist.Field="CheckTargets" Content="{l:Tr v051.035}" Command="{Binding CheckTargetsCommand}" HorizontalAlignment="Left"/>
+          <TextBlock Text="{l:Local TargetStatus}" Classes="small" TextWrapping="Wrap"/>
+          <ItemsControl ItemsSource="{Binding TargetResults}"><ItemsControl.ItemTemplate><DataTemplate x:DataType="core:RealityTargetResult"><Grid ColumnDefinitions="*,Auto" Margin="0,4"><Button Content="{Binding Host}" Command="{ReflectionBinding $parent[UserControl].DataContext.ChooseTargetCommand}" CommandParameter="{Binding Host}" Classes="quiet" HorizontalAlignment="Left"/><StackPanel Grid.Column="1"><TextBlock Text="{l:Local StateLabel}" Classes="small"/><TextBlock Text="{l:Local Reason}" Classes="small" MaxWidth="230" TextWrapping="Wrap"/></StackPanel></Grid></DataTemplate></ItemsControl.ItemTemplate></ItemsControl>
+        </StackPanel>
+        <Expander Header="{l:Tr v051.036}"><StackPanel Spacing="12">
+          <StackPanel IsVisible="{Binding IsReality}" Spacing="8"><TextBlock Text="UUID" Classes="small"/><TextBox Text="{Binding Uuid}"/><TextBlock Text="REALITY 公钥" Classes="small"/><TextBox Text="{Binding PublicKey}" IsReadOnly="True"/><TextBlock Text="Short ID" Classes="small"/><TextBox Text="{Binding ShortId}"/></StackPanel>
+          <controls:SecretTextBox controls:FormAssist.Field="Credential" IsVisible="{Binding !IsReality}" Text="{Binding HyPassword}" PasswordChar="●"/>
+          <Button Content="{l:Tr v051.037}" Command="{Binding GenerateCredentialCommand}" HorizontalAlignment="Left"/>
+          <StackPanel IsVisible="{Binding RotationRequested}" Spacing="10"><TextBlock Text="{l:Tr v051.040}" TextWrapping="Wrap"/><WrapPanel><Button Content="{l:Tr v051.038}" Command="{Binding ConfirmRotationCommand}" Margin="0,0,10,0"/><Button Content="{l:Tr v051.039}" Command="{Binding CancelRotationCommand}"/></WrapPanel></StackPanel>
+        </StackPanel></Expander>
+        <StackPanel IsVisible="{Binding IsCertificate}" Spacing="12"><CheckBox IsChecked="{Binding AutomaticCertificate}" Content="{l:Tr acme.auto}"/>
+<StackPanel IsVisible="{Binding AutomaticCertificate}" Spacing="14"><TextBox controls:FormAssist.Field="AcmeEmail" Text="{Binding AcmeEmail}" Watermark="{l:Tr acme.email}"/><ComboBox ItemsSource="{Binding CertificateChallenges}" SelectedIndex="{Binding AcmeChallengeIndex}" HorizontalAlignment="Stretch"/><CheckBox IsChecked="{Binding AcmeStaging}"><TextBlock Text="{l:Tr acme.staging}" TextWrapping="Wrap"/></CheckBox><CheckBox controls:FormAssist.Field="DomainAuthorized" IsChecked="{Binding DomainAuthorized}"><TextBlock Text="{l:Tr acme.authorized}" TextWrapping="Wrap"/></CheckBox><TextBlock Text="{l:Tr acme.help}" Classes="small" TextWrapping="Wrap" LineHeight="23"/></StackPanel></StackPanel>
+        <StackPanel IsVisible="{Binding ManualCertificate}" Spacing="10"><TextBlock Text="{l:Tr protocols.manualTls}" Classes="small" TextWrapping="Wrap"/><TextBox controls:FormAssist.Field="CertificatePath" Text="{Binding CertificatePath}" Watermark="/etc/neko/cert.pem"/><TextBox Text="{Binding CertificateKeyPath}" Watermark="/etc/neko/key.pem"/></StackPanel>
+        <StackPanel IsVisible="{Binding IsShadowsocks}" Spacing="10"><TextBlock Text="{l:Tr protocols.method}" Classes="small"/><ComboBox ItemsSource="{Binding Methods}" SelectedItem="{Binding Method}" HorizontalAlignment="Stretch"/><controls:SecretTextBox controls:FormAssist.Field="Credential" Text="{Binding HyPassword}" PasswordChar="●"/></StackPanel>
+
+        <CheckBox IsVisible="{Binding NeedsTls}" Content="{l:Tr a304}" IsChecked="True" IsEnabled="False"/>
+      </StackPanel>
+      <StackPanel IsVisible="{Binding Step4}" IsEnabled="{Binding !IsOperating}" Spacing="18">
+        <TextBlock Text="{l:Tr workflow.localOnly}" IsVisible="{Binding LocalOnly}" Classes="muted" TextWrapping="Wrap" LineHeight="25"/>
+        <StackPanel IsVisible="{Binding RemoteMode}" Spacing="18"><TextBlock Text="{l:Local PreflightStatus}" Foreground="{DynamicResource AccentInkBrush}" TextWrapping="Wrap"/><TextBlock Text="{l:Local ReviewSummary}" TextWrapping="Wrap" LineHeight="26"/><Expander Header="{l:Tr v051.019}"><TextBox Text="{l:Local RemotePreview}" IsReadOnly="True" AcceptsReturn="True" TextWrapping="Wrap" MinHeight="160"/></Expander><CheckBox controls:FormAssist.Field="BackupExisting" IsChecked="{Binding BackupExisting}" IsVisible="{Binding Inspection.OwnedConfiguration}"><TextBlock Text="{l:Tr remote.backupReplace}" TextWrapping="Wrap"/></CheckBox><CheckBox controls:FormAssist.Field="DeploymentConfirmed" IsChecked="{Binding DeploymentConfirmed}"><TextBlock Text="{l:Tr remote.confirm}" TextWrapping="Wrap"/></CheckBox></StackPanel>
+        <Expander Header="{l:Tr v051.020}"><StackPanel Spacing="14">        <TextBox Text="{Binding ServerName}" Watermark="{l:Tr workflow.serverName}"/><TextBox Text="{Binding NodeName}" Watermark="{l:Tr workflow.nodeName}"/>
+        <WrapPanel><Button Content="{l:Tr workflow.save}" Command="{Binding SaveLocalNodeCommand}" Classes="primary" Margin="0,0,12,10"/><Button Content="{l:Tr workflow.export}" Command="{Binding ExportClientCommand}" Margin="0,0,0,10"/></WrapPanel>
+        <Button Content="{l:Tr protocols.serverFile}" Command="{Binding SaveServerFileCommand}" HorizontalAlignment="Left"/>
+        <TextBlock Text="{l:Tr protocols.sensitive}" Classes="small" TextWrapping="Wrap"/><TextBox Text="{l:Local Preview}" IsReadOnly="True" AcceptsReturn="True" TextWrapping="Wrap" MinHeight="140"/><TextBlock Text="{l:Tr a301}" Classes="small" LineHeight="24" TextWrapping="Wrap"/>
+</StackPanel></Expander>
+      </StackPanel>
+      <StackPanel IsVisible="{Binding Step5}" Spacing="18">
+        <TextBlock Text="{l:Tr remote.result}" FontSize="20" FontWeight="SemiBold"/><TextBlock IsVisible="{Binding !HasOutcome}" Text="{l:Tr remote.notExecuted}" Classes="muted" TextWrapping="Wrap"/>
+        <Border Classes="notice" Padding="18" IsVisible="{Binding HasOutcome}"><TextBlock Text="{l:Local ResultVerification}" TextWrapping="Wrap" LineHeight="25"/></Border><ItemsControl ItemsSource="{Binding ProgressSteps}"><ItemsControl.ItemTemplate><DataTemplate x:DataType="core:DeploymentProgress"><Border BorderBrush="{DynamicResource LineBrush}" BorderThickness="0,0,0,1" Padding="0,14"><StackPanel Spacing="8"><Grid ColumnDefinitions="*,Auto"><TextBlock Text="{l:Local Step}" FontWeight="Medium" TextWrapping="Wrap"/><TextBlock Grid.Column="1" Text="{l:Local State}" Foreground="{DynamicResource AccentInkBrush}" FontSize="12" Margin="14,0,0,0"/></Grid><TextBlock Text="{l:Local Detail}" Classes="small" TextWrapping="Wrap" LineHeight="23"/></StackPanel></Border></DataTemplate></ItemsControl.ItemTemplate></ItemsControl>
+        <StackPanel IsEnabled="{Binding !IsOperating}" Spacing="14"><Button IsVisible="{Binding HasOutcome}" Content="{l:Tr remote.review}" Command="{Binding ReviewDeploymentCommand}" HorizontalAlignment="Left"/><Button IsVisible="{Binding DeploymentSucceeded}" Content="{l:Tr remote.manage}" Command="{Binding OpenManagementCommand}" HorizontalAlignment="Left"/><WrapPanel><Button Content="{l:Tr workflow.save}" Command="{Binding SaveLocalNodeCommand}" Margin="0,0,10,10"/><Button Content="{l:Tr workflow.export}" Command="{Binding ExportClientCommand}" Margin="0,0,0,10"/></WrapPanel></StackPanel>
+      </StackPanel>
+
+</StackPanel>
+    <controls:GlassPanel x:Name="ContextPanel" Grid.Column="1" Margin="28,0,0,0" VerticalAlignment="Top" Padding="22,24" CornerRadius="18"><StackPanel>
+      <TextBlock Text="{l:Tr a195}" FontSize="12" Foreground="{DynamicResource AccentInkBrush}" FontWeight="Medium" TextWrapping="Wrap"/>
+      <TextBlock Text="{l:Local ContextTitle}" FontSize="18" FontWeight="SemiBold" TextWrapping="Wrap" Margin="0,16,0,12"/>
+      <TextBlock Text="{l:Local ContextBody}" Classes="muted" TextWrapping="Wrap" LineHeight="26"/>
+      <Border Background="{DynamicResource NoticeBrush}" CornerRadius="5" Padding="12,10" Margin="0,24,0,0"><TextBlock Text="{l:Local ContextStatus}" Foreground="{DynamicResource AccentInkBrush}" FontSize="12" TextWrapping="Wrap" LineHeight="22"/></Border>
+    </StackPanel></controls:GlassPanel>
+    </Grid></ScrollViewer>
+    <controls:ActionSurface Grid.Row="2"><Grid ColumnDefinitions="*,Auto" Margin="16,10">
+      <Button Content="{l:Tr a039}" Command="{Binding BackCommand}" IsEnabled="{Binding CanBack}" HorizontalAlignment="Left"/>
+      <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="10"><Button Content="{l:Tr v051.021}" Command="{Binding ExportClientCommand}" IsVisible="{Binding ShowResultActions}" Classes="primary"/><Button Content="{l:Tr v051.022}" Command="{Binding OpenManagementCommand}" IsVisible="{Binding ShowResultActions}"/><Button Content="{l:Tr a297}" Classes="quiet" Command="{Binding ResetCommand}"/><Button Content="{l:Local NextLabel}" Classes="primary" Command="{Binding NextCommand}" IsVisible="{Binding CanNext}" IsEnabled="{Binding CanNext}"/><Button Content="{l:Tr remote.cancel}" Command="{Binding CancelOperationCommand}" IsVisible="{Binding IsOperating}"/></StackPanel>
+    </Grid></controls:ActionSurface></Grid>
+</UserControl>

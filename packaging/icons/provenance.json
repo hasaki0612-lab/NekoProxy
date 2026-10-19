@@ -1,0 +1,13 @@
+{
+  "source_sha256": "f95f3845fd516b990cf8f96e990b67d9af86f8eae275c68e364429a3f52fce0a",
+  "source_size": [
+    1254,
+    1254
+  ],
+  "transform": "uniform resize and format conversion only; no crop, repaint or background removal",
+  "outputs": {
+    "packaging\\icons\\NekoProxy.png": "b882e6a107f59fb712f5eb5e6ee6c12382e34eda97362c7736801daf0bdfb150",
+    "packaging\\icons\\NekoProxy.icns": "71ecbf76523b94fd6b28fb2c8ed5b70819b6a210376d72c2ef3b80eeb7ae461d",
+    "src\\NekoProxy.Desktop\\Assets\\NekoProxy.ico": "18992607d0ddfbdf999b87de686e67f2560e9cd923665a1c6562aae23edcf9c7"
+  }
+}
